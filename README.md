@@ -1,17 +1,17 @@
-# TRAVEL-STORY-MERN-STACK-
+# TRAVEL-STORY-MERN-STACK
 
-
-
-Frontend: .sp
+## Frontend: 
+```
+.sp
 cd travel-story-app .sp
 npm i .sp
 npm run dev .sp
+```
 
-
-
-
-
-Backend: .sp .sp
+## Backend: 
+```
+.sp .sp
 cd backend .sp
 npm i .sp
 node index.js
+```
