@@ -1,40 +1,48 @@
 import axios from "axios";
-import { BASE_URL } from "./constants"; // Ensure BASE_URL is correctly imported from constants
+import { BASE_URL } from "./constants";
 
-// Create an Axios instance
+// Create Axios instance
 const axiosInstance = axios.create({
-  baseURL: BASE_URL, // Ensure baseURL is set correctly
-  timeout: 10000, // Timeout in milliseconds (10 seconds)
+  baseURL: BASE_URL, // http://localhost:3012
+  timeout: 10000,
   headers: {
-    "Content-Type": "application/json", // Ensure Content-Type is set correctly
+    "Content-Type": "application/json",
   },
 });
 
-// Add a request interceptor
+// ✅ Request Interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    const accessToken = localStorage.getItem("token"); // Retrieve the token from localStorage
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`; // Add token to the Authorization header
+    const token = localStorage.getItem("token");
+
+    // ❗ Do NOT attach token for login & signup
+    if (token && !config.url.includes("/login") && !config.url.includes("/create-account")) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
-    return config; // Return modified config
+
+    return config;
   },
   (error) => {
-    return Promise.reject(error); // Handle request errors
+    return Promise.reject(error);
   }
 );
 
-// Optional: Add a response interceptor to handle specific error scenarios (e.g., unauthorized)
+// ✅ Response Interceptor
 axiosInstance.interceptors.response.use(
-  (response) => response, // Return the response as it is if no error
+  (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401) {
-      // Token expired or unauthorized, handle as needed
-      localStorage.clear(); // Clear the token
-      window.location.href = "/login"; // Redirect to login page
+    if (error.response) {
+      // Unauthorized → force logout
+      if (error.response.status === 401) {
+        localStorage.removeItem("token");
+        window.location.href = "/login";
+      }
+    } else {
+      console.error("Network / Server error:", error.message);
     }
-    return Promise.reject(error); // Handle other errors
+
+    return Promise.reject(error);
   }
 );
 
-export default axiosInstance; // Export the configured axios instance
+export default axiosInstance;
