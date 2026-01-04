@@ -2,16 +2,16 @@
 
 
 
-Frontend:
-cd travel-story-app
-npm i
-npm run dev
+Frontend: .sp
+cd travel-story-app .sp
+npm i .sp
+npm run dev .sp
 
 
 
 
 
-Backend:
-cd backend
-npm i
+Backend: .sp .sp
+cd backend .sp
+npm i .sp
 node index.js
