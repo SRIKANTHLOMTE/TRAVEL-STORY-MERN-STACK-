@@ -2,16 +2,12 @@
 
 ## Frontend: 
 ```
-.sp
-cd travel-story-app .sp
-npm i .sp
-npm run dev .sp
+cd travel-story-app
+npm run dev
 ```
 
 ## Backend: 
 ```
-.sp .sp
-cd backend .sp
-npm i .sp
+cd backend
 node index.js
 ```
